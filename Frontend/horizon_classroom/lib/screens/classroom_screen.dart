@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
 
-class ClassroomScreen extends StatelessWidget {
+
+class ClassroomScreen extends StatefulWidget {
   const ClassroomScreen({super.key});
+
+  @override
+  State<ClassroomScreen> createState() => _ClassroomScreenState();
+}
+
+class _ClassroomScreenState extends State<ClassroomScreen> {
+
+  // ================= CHECK LOGIN STATUS =================
+
+  bool isLoggedIn = true;
+  void checkLoginStatus() {
+    if(!isLoggedIn){
+      Navigator.pushNamed(context, '/welcome');
+    }
+  }
+
+  // ------------------------------------------------------
+  // ================= INITIALIZATION =====================
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkLoginStatus();
+    });
+  }
+
+  // ------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
