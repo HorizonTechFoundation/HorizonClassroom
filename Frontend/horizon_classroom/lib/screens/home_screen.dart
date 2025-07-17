@@ -30,6 +30,13 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text("Profile"),
             ),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/splash');
+              },
+              child: const Text("splash"),
+            ),
           ],
         )
       ),
