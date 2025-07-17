@@ -18,16 +18,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Splash Screen")),
+      backgroundColor: Colors.black,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text("HORIZON TECH FOUNDATION",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20),
-          ],
+        child: Image.asset(
+          'assets/splash.png',
+          width: width * 1,
+          fit: BoxFit.contain,
         ),
       ),
     );
