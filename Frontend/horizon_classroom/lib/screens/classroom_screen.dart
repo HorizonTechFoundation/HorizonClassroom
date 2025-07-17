@@ -12,14 +12,14 @@ class ClassroomScreen extends StatelessWidget {
           children:[
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/classroom');
+                Navigator.pushNamed(context, '/notes');
               },
               child: const Text("Notes"),
             ),
             const SizedBox(width: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/schedule');
+                Navigator.pushNamed(context, '/test');
               },
               child: const Text("Test"),
             ),
@@ -30,7 +30,7 @@ class ClassroomScreen extends StatelessWidget {
             const SizedBox(width: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/classroom');
+                Navigator.pushNamed(context, '/');
               },
               child: const Text("Leave"),
             ),

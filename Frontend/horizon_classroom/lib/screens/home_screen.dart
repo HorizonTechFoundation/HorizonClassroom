@@ -23,6 +23,13 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text("View Scheduled Classes"),
             ),
+            const SizedBox(width: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              child: const Text("Profile"),
+            ),
           ],
         )
       ),

@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Multi Page App with Routes',
+      title: 'Horizon Classroom',
       initialRoute: AppRoutes.home,
       onGenerateRoute: AppRoutes.generateRoute,
     );
