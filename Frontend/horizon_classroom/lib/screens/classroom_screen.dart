@@ -90,18 +90,20 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
 
             SizedBox(
               width: width * 0.8,
-              height: height * 0.35,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: width * 0.8,
-                    height: (width * 0.8)*0.5625, // 16:9 aspect ratio
-                    child: ColoredBox(color: Colors.cyan)
-                  )
-                ],
-                
+              child: Padding( 
+                padding: EdgeInsets.symmetric(vertical: height * 0.06),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+
+                  children: [
+                    SizedBox(
+                      width: width * 0.8,
+                      height: (width * 0.8)*0.5625, // 16:9 aspect ratio
+                      child: ColoredBox(color: Colors.cyan)
+                    )
+                  ],
+                )
               ),
             ),
 
