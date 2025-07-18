@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ================= CHECK LOGIN STATUS =================
 
-  bool isLoggedIn = false;
+  bool isLoggedIn = true;
   void checkLoginStatus() {
     if(!isLoggedIn){
       Navigator.pushNamed(context, '/welcome');
