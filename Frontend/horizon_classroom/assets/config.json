@@ -1,0 +1,28 @@
+{
+  "api": "https://mocki.io/v1/4b123c6d-c8ff-4058-bd05-a783e002c799",
+
+  "sampleSchedule":
+  [
+    {
+      "classname": "Environmental And Social Impact Assessment",
+      "timeStart": "9:00 AM",
+      "timeEnd": "10:30 AM",
+      "takenBy": "Dr. Smith",
+      "venue": "B3L02"
+    },
+    {
+      "classname": "Environmental And Social Impact Assessment",
+      "timeStart": "9:00 AM",
+      "timeEnd": "10:30 AM",
+      "takenBy": "Dr. Smith",
+      "venue": "B3L02"
+    },
+    {
+      "classname": "Environmental And Social Impact Assessment",
+      "timeStart": "9:00 AM",
+      "timeEnd": "10:30 AM",
+      "takenBy": "Dr. Global",
+      "venue": "B3L02"
+    }
+  ]
+}

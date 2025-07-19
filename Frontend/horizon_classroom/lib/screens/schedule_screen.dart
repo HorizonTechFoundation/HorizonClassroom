@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:dio/dio.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -11,29 +13,9 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
 
-  List<Map<String, dynamic>> schedule = [
-    {
-      "classname": "Environmental And Social Impact Assessment",
-      "timeStart": "9:00 AM",
-      "timeEnd": "10:30 AM",
-      "takenBy": "Dr. Smith",
-      "venue": "B3L02"
-    },
-    {
-      "classname": "Environmental And Social Impact Assessment",
-      "timeStart": "9:00 AM",
-      "timeEnd": "10:30 AM",
-      "takenBy": "Dr. Smith",
-      "venue": "B3L02"
-    },
-    {
-      "classname": "Environmental And Social Impact Assessment",
-      "timeStart": "9:00 AM",
-      "timeEnd": "10:30 AM",
-      "takenBy": "Dr. Smith",
-      "venue": "B3L02"
-    },
-  ];
+  List<Map<String, dynamic>> schedule = [];
+  bool isLoading = true;
+  bool isError = false;
 
   // ================= CHECK LOGIN STATUS =================
 
@@ -45,11 +27,56 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
 
   // ------------------------------------------------------
+  // ================= FETCH SCHEDULE =====================
+
+  final dio = Dio();
+
+  void fetchSchedule() async {
+
+    setState(() {
+      isLoading = true;
+      isError = false;
+    });
+
+    try {
+
+      final String jsonString = await rootBundle.loadString('assets/config.json');
+      final Map<String, dynamic> jsonData = json.decode(jsonString);
+      // final String api = jsonData['api'];
+
+      final List<Map<String, dynamic>> sampleSchedule = List<Map<String, dynamic>>.from(jsonData['sampleSchedule']);
+
+      // final response = await dio.get('$api/schedule');
+
+      // final response = await dio.get(api); // Mock API for testing
+
+      setState(() {
+        // schedule = List<Map<String, dynamic>>.from(response.data['data']);
+        schedule = sampleSchedule;
+        isLoading = false;
+        isError = false;
+      });
+
+    } catch (e) {
+
+      setState(() {
+        schedule = [];
+        isLoading = false;
+        isError = true;
+      });
+      throw Exception('Failed to load schedule: $e');
+
+    }
+
+  }
+
+  // ------------------------------------------------------
   // ================= INITIALIZATION =====================
 
   @override
   void initState() {
     super.initState();
+    fetchSchedule();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkLoginStatus();
     });
@@ -69,7 +96,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         title: const Text("Schedule Classes", 
           style: TextStyle(fontSize: 24),
           textAlign: TextAlign.center,
-        )
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              fetchSchedule();
+            },
+            tooltip: 'Refresh',
+          ),
+        ],
       ),
       body: SafeArea(
         child: ListView.builder(

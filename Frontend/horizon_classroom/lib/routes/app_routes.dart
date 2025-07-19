@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../screens/home_screen.dart';
-import '../screens/second_screen.dart';
 import '../screens/classroom_screen.dart';
 import '../screens/schedule_screen.dart';
 import '../screens/profile_screen.dart';
@@ -37,8 +36,6 @@ class AppRoutes {
       
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case second:
-        return MaterialPageRoute(builder: (_) => const SecondScreen());
       case classroom:
         return MaterialPageRoute(builder: (_) => const ClassroomScreen());
       case schedule:
