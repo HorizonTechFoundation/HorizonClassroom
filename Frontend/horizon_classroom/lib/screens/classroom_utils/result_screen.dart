@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class ResultScreen extends StatefulWidget {
@@ -23,11 +24,19 @@ class _ResultScreenState extends State<ResultScreen> {
       "position3":"Alice Johnson",
     };
 
+  final storage = FlutterSecureStorage();
+  String? isLoggedIn;
+
+
+  Future<void> readData() async {
+    isLoggedIn = await storage.read(key: "is_login") ?? "0";
+    checkLoginStatus();
+  }
+
   // ================= CHECK LOGIN STATUS =================
 
-  bool isLoggedIn = true;
   void checkLoginStatus() {
-    if(!isLoggedIn){
+    if(isLoggedIn != "1"){
       Navigator.pushNamed(context, '/welcome');
     }
   }
@@ -39,7 +48,7 @@ class _ResultScreenState extends State<ResultScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkLoginStatus();
+      readData();
     });
   }
 
@@ -53,7 +62,8 @@ class _ResultScreenState extends State<ResultScreen> {
 
 
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(backgroundColor: Colors.white),
       body: Center(
         child: Column(
           children:[

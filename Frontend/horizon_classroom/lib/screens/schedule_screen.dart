@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -16,12 +17,19 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   List<Map<String, dynamic>> schedule = [];
   bool isLoading = true;
   bool isError = false;
+  final storage = FlutterSecureStorage();
+  String? isLoggedIn;
+
+
+  Future<void> readData() async {
+    isLoggedIn = await storage.read(key: "is_login") ?? "0";
+    checkLoginStatus();
+  }
 
   // ================= CHECK LOGIN STATUS =================
 
-  bool isLoggedIn = true;
   void checkLoginStatus() {
-    if(!isLoggedIn){
+    if(isLoggedIn != "1"){
       Navigator.pushNamed(context, '/welcome');
     }
   }
@@ -78,7 +86,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     super.initState();
     fetchSchedule();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkLoginStatus();
+      readData();
     });
   }
 
@@ -92,6 +100,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text("Schedule Classes", 
           style: TextStyle(fontSize: 24),

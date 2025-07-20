@@ -1,5 +1,5 @@
 {
-  "api": "https://mocki.io/v1/4b123c6d-c8ff-4058-bd05-a783e002c799",
+  "api": "http://192.168.93.222:8000",
 
   "sampleSchedule":
   [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,17 +11,30 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
-  String name="John Doe";
-  String regNo="953622244000";
+  String name="UnKnown";
+  String regNo="00000000";
+  final storage = FlutterSecureStorage();
+  String? isLoggedIn;
 
-  late TextEditingController _nameController;
-  late TextEditingController _regController;
+  TextEditingController? _nameController;
+  TextEditingController? _regController;
+
+  Future<void> readData() async {
+    isLoggedIn = await storage.read(key: "is_login") ?? "0";
+     final nameVal = await storage.read(key: "name") ?? name;
+    final regVal = await storage.read(key: "regNo") ?? regNo;
+
+    setState(() {
+      _nameController = TextEditingController(text: nameVal);
+      _regController = TextEditingController(text: regVal);
+    });
+    checkLoginStatus();
+  }
 
   // ================= CHECK LOGIN STATUS =================
 
-  bool isLoggedIn = true;
   void checkLoginStatus() {
-    if(!isLoggedIn){
+    if(isLoggedIn != "1"){
       Navigator.pushNamed(context, '/welcome');
     }
   }
@@ -32,10 +45,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: name);
-    _regController = TextEditingController(text: regNo);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkLoginStatus();
+      readData();
     });
   }
 
@@ -48,7 +59,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(backgroundColor: Colors.white,),
       body: Center(
         child: Column(
           children:[
@@ -101,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fillColor: const Color(0xFFF0F0F0),
                   labelText: 'Name',
                   labelStyle: GoogleFonts.amaranth(
-                    fontSize: width * 0.05,
+                    fontSize: width * 0.04,
                     color: const Color.fromARGB(128, 0, 0, 0),
                   ),
                   border: OutlineInputBorder(
@@ -128,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fillColor: const Color(0xFFF0F0F0),
                   labelText: 'Registration Number',
                   labelStyle: GoogleFonts.amaranth(
-                    fontSize: width * 0.05,
+                    fontSize: width * 0.04,
                     color: const Color.fromARGB(128, 0, 0, 0),
                   ),
                   border: OutlineInputBorder(

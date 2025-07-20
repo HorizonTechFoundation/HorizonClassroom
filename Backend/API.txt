@@ -1,0 +1,72 @@
+----------------------
+>>>> FOR STUDENTS <<<<
+----------------------
+
+----------------------
+-- TABLE OF CONTENT --
+----------------------
+
+1. STUDENTS LOGIN
+2. GET SCHEDULED CLASSES
+
+----------------------
+----- API DESIGN -----
+----------------------
+
+1. STUDENTS LOGIN [COMPLETED]
+
+    API : /horizon001/api/students/login/
+    MODE : POST
+    REQUIRED AUTHORIZATION : FALSE
+    DETAIL : This API was used by students to login to the HORIZON CLASSROOM
+    REQUEST : 
+    {
+        "register_number" : <STUDENT REGISTER NUMBER> [STRING]
+        "password" : <STUDENT PASSWORD> [STRING]
+    }
+    RESPONSE :
+    {
+        "name" : <STUDENT NAME> [STRING]
+        "register_number" : <STUDENT REGISTER NUMBER> [STRING]
+        "is_login" : 1 [INT]
+        "access_token" : <ACCESS TOKEN> [STRING]
+        "refresh_token" : <REFRESH TOKEN> [STRING]
+    }
+
+2. GET SCHEDULED CLASSES
+
+    API : /horizon001/api/students/scheduledclasses/
+    MODE : GET
+    REQUIRED AUTHORIZATION : TRUE
+    DETAIL : This API was used to get the classes that are scheduled on <CURRENT DATE> for a <SPECIFIC STUDENT> for a <SPECIFIC INSTITUTE> which get from the requested user.
+    RESPONSE :
+    [
+        {
+            "classname" : <SUBJECT NAME> [STRING],
+            "timeStart" : <START TIME> [STRING],
+            "timeEnd" : <END TIME> [STRING],
+            "date" : <DATE> [STRING],
+            "takenBy" : <CLASS TEACH BY> [STRING],
+            "venue" : <VENUE> [STRING]
+        },
+        .
+        .
+        .
+    ]
+
+3. GET CURRENT CLASS
+
+    API : /horizon001/api/students/currentclass/
+    MODE : GET
+    REQUIRED AUTHORIZATION : TRUE
+    DETAIL : This API was used to get the class that status was "start" for a <SPECIFIC STUDENT> for a <SPECIFIC INSTITUTE> which get from the requested user.
+    RESPONSE :
+    {
+        "classname" : <SUBJECT NAME> [STRING],
+        "timeStart" : <START TIME> [STRING],
+        "timeEnd" : <END TIME> [STRING],
+        "date" : <DATE> [STRING],
+        "takenBy" : <CLASS TEACH BY> [STRING],
+        "venue" : <VENUE> [STRING],
+        "status" : <STATUS> [not started, started, end]
+    }

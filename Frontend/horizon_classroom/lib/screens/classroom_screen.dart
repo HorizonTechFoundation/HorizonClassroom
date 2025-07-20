@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class ClassroomScreen extends StatefulWidget {
@@ -11,11 +12,19 @@ class ClassroomScreen extends StatefulWidget {
 
 class _ClassroomScreenState extends State<ClassroomScreen> {
 
+  final storage = FlutterSecureStorage();
+  String? isLoggedIn;
+
+
+  Future<void> readData() async {
+    isLoggedIn = await storage.read(key: "is_login") ?? "0";
+    checkLoginStatus();
+  }
+
   // ================= CHECK LOGIN STATUS =================
 
-  bool isLoggedIn = true;
   void checkLoginStatus() {
-    if(!isLoggedIn){
+    if(isLoggedIn != "1"){
       Navigator.pushNamed(context, '/welcome');
     }
   }
@@ -27,7 +36,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkLoginStatus();
+      readData();
     });
   }
 
@@ -47,6 +56,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
     int classTotal = 55;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           children:[

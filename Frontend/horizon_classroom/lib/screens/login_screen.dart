@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +13,81 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController regNoController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final Dio dio = Dio();
+  bool _isLoading = false;
+  final storage = FlutterSecureStorage();
+
+
+  // -------------------- LOGIN ---------------------
+
+  Future<void> loginStudent(BuildContext context) async {
+    String regNo = regNoController.text.trim();
+    String password = passwordController.text.trim();
+
+    if (regNo.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter register number and password")),
+      );
+      return;
+    }
+    setState(() => _isLoading = true);
+    try {
+      final String jsonString = await rootBundle.loadString('assets/config.json');
+      final Map<String, dynamic> jsonData = json.decode(jsonString);
+      final String api = jsonData['api'];
+      final response = await dio.post(
+        '$api/horizon001/api/students/login/',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {
+          'register_number': regNo,
+          'password': password,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        await storage.write(key: 'access', value: data['access_token']);
+        await storage.write(key: 'refresh', value: data['refresh_token']);
+        await storage.write(key: 'name', value: data['name']);
+        await storage.write(key: 'regNo', value: data['register_number']);
+        await storage.write(key: 'is_login', value: "1");
+        print('Access Token: ${data['access_token']}');
+        Navigator.pushNamed(context, '/');
+      }
+    } on DioException catch (e) {
+      String errorMsg = 'Login failed';
+      if (e.response != null) {
+        errorMsg = e.response?.data['detail'] ?? 'Invalid credentials';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMsg)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Something went wrong: $e")),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  // ------------------------------------------------------------------------
+
+  @override
+  void dispose() {
+    regNoController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: width * 0.8,
                   child: TextField(
+                    controller: regNoController,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color(0xFFF0F0F0),
-                        labelText: 'Resistration Number',
+                        labelText: 'Registration Number',
                         labelStyle: GoogleFonts.amaranth(
                             fontSize: width * 0.04,
                             color: const Color.fromARGB(128, 0, 0, 0)),
@@ -84,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: width * 0.8,
                   child: TextField(
+                    controller: passwordController,
                     obscureText: true, // Hide password text
                     decoration: InputDecoration(
                         filled: true,
@@ -120,9 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/');
-                          },
+                          onPressed: _isLoading ? null : () => loginStudent(context),
                           child: Text(
                             "Login",
                             style: GoogleFonts.amaranth(

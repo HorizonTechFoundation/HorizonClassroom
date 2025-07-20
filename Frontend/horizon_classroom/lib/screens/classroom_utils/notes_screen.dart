@@ -5,6 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class NotesScreen extends StatefulWidget {
@@ -21,8 +22,25 @@ class _NotesScreenState extends State<NotesScreen> {
   String notesText = "";
   String formattedDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
+  final storage = FlutterSecureStorage();
+  String? isLoggedIn;
 
-  // ================ SAVE AS PDF ================
+
+  Future<void> readData() async {
+    isLoggedIn = await storage.read(key: "is_login") ?? "0";
+    checkLoginStatus();
+  }
+
+  // ================= CHECK LOGIN STATUS =================
+
+  void checkLoginStatus() {
+    if(isLoggedIn != "1"){
+      Navigator.pushNamed(context, '/welcome');
+    }
+  }
+
+  // ------------------------------------------------------
+  // ==================== SAVE AS PDF =====================
 
   Future<Uint8List> generatePdf(String notes, String className) async {
   final pdf = pw.Document();
@@ -45,15 +63,6 @@ class _NotesScreenState extends State<NotesScreen> {
   return pdf.save();
 }
 
-  // ================= CHECK LOGIN STATUS =================
-
-  bool isLoggedIn = true;
-  void checkLoginStatus() {
-    if(!isLoggedIn){
-      Navigator.pushNamed(context, '/welcome');
-    }
-  }
-
   // ------------------------------------------------------
   // ================= INITIALIZATION =====================
 
@@ -61,7 +70,7 @@ class _NotesScreenState extends State<NotesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkLoginStatus();
+      readData();
     });
   }
 
@@ -74,7 +83,8 @@ class _NotesScreenState extends State<NotesScreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Take Notes")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(backgroundColor: Colors.white, title: const Text("Take Notes")),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
