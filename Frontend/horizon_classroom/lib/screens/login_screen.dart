@@ -53,8 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode == 200) {
         final data = response.data;
-        await storage.write(key: 'access', value: data['access_token']);
-        await storage.write(key: 'refresh', value: data['refresh_token']);
+        await storage.write(key: 'access_token', value: data['access_token']);
+        await storage.write(key: 'refresh_token', value: data['refresh_token']);
         await storage.write(key: 'name', value: data['name']);
         await storage.write(key: 'regNo', value: data['register_number']);
         await storage.write(key: 'is_login', value: "1");

@@ -20,12 +20,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   final storage = FlutterSecureStorage();
   String? isLoggedIn;
 
+  // ======================= LOGOUT =======================
+
+  void logout() async {
+    await storage.deleteAll();
+    Navigator.pushNamed(context, '/welcome');
+  }
+
+  // ------------------------------------------------------
+  // ==================== READ DATA =======================
 
   Future<void> readData() async {
     isLoggedIn = await storage.read(key: "is_login") ?? "0";
     checkLoginStatus();
   }
 
+  // ------------------------------------------------------
   // ================= CHECK LOGIN STATUS =================
 
   void checkLoginStatus() {
@@ -40,43 +50,67 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   final dio = Dio();
 
   void fetchSchedule() async {
-
     setState(() {
       isLoading = true;
       isError = false;
     });
 
     try {
-
       final String jsonString = await rootBundle.loadString('assets/config.json');
       final Map<String, dynamic> jsonData = json.decode(jsonString);
-      // final String api = jsonData['api'];
+      final String api = jsonData['api'];
 
-      final List<Map<String, dynamic>> sampleSchedule = List<Map<String, dynamic>>.from(jsonData['sampleSchedule']);
+      String? accessToken = await storage.read(key: 'access_token');
+      String? refreshToken = await storage.read(key: 'refresh_token');
 
-      // final response = await dio.get('$api/schedule');
+      if (accessToken == null || refreshToken == null) {
+        logout();
+      }
 
-      // final response = await dio.get(api); // Mock API for testing
+      dio.options.headers['Authorization'] = 'Bearer $accessToken';
 
-      setState(() {
-        // schedule = List<Map<String, dynamic>>.from(response.data['data']);
-        schedule = sampleSchedule;
-        isLoading = false;
-        isError = false;
-      });
+      try {
+        final response = await dio.get('$api/horizon001/api/students/scheduledclasses/');
+        setState(() {
+          schedule = List<Map<String, dynamic>>.from(response.data);
+          isLoading = false;
+          isError = false;
+        });
+      } on DioException catch (e) {
+        if (e.response?.statusCode == 401) {
+          try {
+            final refreshResponse = await dio.post(
+              '$api/horizon001/api/students/token/refresh/',
+              data: {'refresh': refreshToken},
+            );
 
+            accessToken = refreshResponse.data['access'];
+            await storage.write(key: 'access_token', value: accessToken);
+
+            dio.options.headers['Authorization'] = 'Bearer $accessToken';
+            final retryResponse = await dio.get('$api/horizon001/api/students/scheduledclasses/');
+            setState(() {
+              schedule = List<Map<String, dynamic>>.from(retryResponse.data);
+              isLoading = false;
+              isError = false;
+            });
+          } catch (_) {
+            logout();
+          }
+        } else {
+          rethrow;
+        }
+      }
     } catch (e) {
-
       setState(() {
         schedule = [];
         isLoading = false;
         isError = true;
       });
-      throw Exception('Failed to load schedule: $e');
-
+      print('Schedule fetch failed: $e');
     }
-
   }
+
 
   // ------------------------------------------------------
   // ================= INITIALIZATION =====================
@@ -84,9 +118,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   void initState() {
     super.initState();
-    fetchSchedule();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      readData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      await readData();
+      if (isLoggedIn == "1") {
+        fetchSchedule();
+      }
     });
   }
 
@@ -117,7 +153,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         ],
       ),
       body: SafeArea(
-        child: ListView.builder(
+        child: isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : isError
+        ? Center(child: Text("Failed to load schedule. Please try again."))
+        : schedule.isEmpty
+        ? Center(
+            child: Text(
+              "No classes scheduled.",
+              style: GoogleFonts.basic(fontSize: width * 0.05, color: Colors.black54),
+            ),
+          ):
+        ListView.builder(
           padding: EdgeInsets.symmetric(vertical: height * 0.02),
           itemCount: schedule.length,
           itemBuilder: (context, index) {

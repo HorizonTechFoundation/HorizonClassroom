@@ -19,9 +19,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController? _nameController;
   TextEditingController? _regController;
 
+  // =================== READ DATA =======================
+
   Future<void> readData() async {
     isLoggedIn = await storage.read(key: "is_login") ?? "0";
-     final nameVal = await storage.read(key: "name") ?? name;
+    final nameVal = await storage.read(key: "name") ?? name;
     final regVal = await storage.read(key: "regNo") ?? regNo;
 
     setState(() {
@@ -31,6 +33,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     checkLoginStatus();
   }
 
+  // ------------------------------------------------------
+  // ======================= LOGOUT =======================
+
+  void logout() async {
+    await storage.deleteAll();
+    Navigator.pushNamed(context, '/welcome');
+  }
+
+  // ------------------------------------------------------
   // ================= CHECK LOGIN STATUS =================
 
   void checkLoginStatus() {
@@ -173,9 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/welcome');
-                      },
+                      onPressed: logout,
                       child: Text("Logout",
                         style: GoogleFonts.amaranth(fontSize: width*0.06, color: Colors.white),
                       ),

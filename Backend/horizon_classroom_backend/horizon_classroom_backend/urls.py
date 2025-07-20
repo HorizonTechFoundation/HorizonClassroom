@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('horizon001/api/admin/', admin.site.urls),
     path('horizon001/api/', include('accounts.urls')),
+    path('horizon001/api/', include('classes.urls')),
 ]
