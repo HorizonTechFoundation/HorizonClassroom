@@ -6,14 +6,17 @@
 -- TABLE OF CONTENT --
 ----------------------
 
-1. STUDENTS LOGIN
-2. GET SCHEDULED CLASSES
+1. STUDENTS LOGIN ------------------------- [COMPLETED]
+2. GET SCHEDULED CLASSES ------------------ [COMPLETED]
+3. GET CURRENT CLASS ---------------------- [COMPLETED]
+4. GET TEST FOR CLASSROOM ----------------- [NOT STARTED]
+5. ADD MARK TO RESULTS -------------------- [NOT STARTED]
 
 ----------------------
 ----- API DESIGN -----
 ----------------------
 
-1. STUDENTS LOGIN [COMPLETED]
+1. STUDENTS LOGIN
 
     API : /horizon001/api/students/login/
     MODE : POST
@@ -69,4 +72,56 @@
         "takenBy" : <CLASS TEACH BY> [STRING],
         "venue" : <VENUE> [STRING],
         "status" : <STATUS> [not started, started, end]
+    }
+
+4. GET TEST FOR CLASSROOM
+
+    API : /horizon001/api/students/gettestbyid/<int:id>/
+    MODE : GET
+    REQUIRED AUTHORIZATION : TRUE
+    DETAIL : This API was used to fetch the test data from database for the specific class while class status is started.
+    RESPONSE :
+    {
+        "classid" : <CLASS REFERANCE> [FOREGIN KEY],
+        "testdata" : 
+        [
+            {
+            "question": <QUESTION FOR TEST> [STRING],
+            "options": [ <OPTION 1> [STRING], <OPTION 2> [STRING], <OPTION 3> [STRING]],
+            "correctAnswer": <OPTION 2> [STRING],
+            },
+            .
+            .
+            .
+        ];
+        "resultdata" : 
+        {
+            "position1" : 
+            {
+                "student" : <STUDENT REFERANCE> [FOREGIN KEY] (BLANK = TRUE),
+                "mark" : <MARK> [INT]
+            },
+            "position2" :
+            {
+                "student" : <STUDENT REFERANCE> [FOREGIN KEY] (BLANK = TRUE),
+                "mark" : <MARK> [INT]
+            },
+            "position3" :
+            {
+                "student" : <STUDENT REFERANCE> [FOREGIN KEY] (BLANK = TRUE),
+                "mark" : <MARK> [INT]
+            },
+        }
+    }
+
+5. ADD MARK TO RESULTS
+
+    API : /horizon001/api/students/addmark/
+    MODE : POST
+    REQUIRED AUTHORIZATION : TRUE
+    DETAIL : This API was used to add mark to the test result by campare it with resultdata if the mark > any position, then update the position with new mark, else no change.
+    REQUEST :
+    {
+        "classid" : <CLASS> [INT],
+        "markscored" : <MARKS> [INT]
     }

@@ -1,0 +1,40 @@
+### ========= 1. STUDENTS LOGIN ============
+
+POST http://127.0.0.1:8000/horizon001/api/students/login/
+Content-Type: application/json
+
+{
+    "register_number":"953622244024", 
+    "password":"123"
+}
+
+
+### =========== 2. GET SCHEDULED CLASSES =============
+
+GET http://127.0.0.1:8000/horizon001/api/students/scheduledclasses/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMDg4NTk1LCJpYXQiOjE3NTMwODgyOTUsImp0aSI6IjcxMjIzZjM3MDJhZTRjMWNiNDBkZmJmYTI4NTMyMTg2IiwidXNlcl9pZCI6M30.-XwjnTWJa-cfCZnQimmNagKYPIGJT-lCnlo3MuVCiGE
+
+
+### =========== 3. GET CURRENT CLASS =============
+
+GET http://127.0.0.1:8000/horizon001/api/students/currentclass/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMDg4NTk1LCJpYXQiOjE3NTMwODgyOTUsImp0aSI6IjcxMjIzZjM3MDJhZTRjMWNiNDBkZmJmYTI4NTMyMTg2IiwidXNlcl9pZCI6M30.-XwjnTWJa-cfCZnQimmNagKYPIGJT-lCnlo3MuVCiGE
+
+### =========== 4. GET TEST FOR CLASSROOM =============
+
+GET http://127.0.0.1:8000/horizon001/api/students/gettestbyid/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMDg5MDgzLCJpYXQiOjE3NTMwODg3ODMsImp0aSI6ImJhYjY1NjMwZWYxOTQxMmE5MTliNDdmNzA2ODljZGNmIiwidXNlcl9pZCI6M30.3jsZ-LZuIxbFoPM0Alcilh0q-t8s2b7xO1pETre1LNI
+
+### =========== 5. ADD MARK TO RESULTS =============
+
+POST http://127.0.0.1:8000/horizon001/api/students/addmark/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMDg5MDgzLCJpYXQiOjE3NTMwODg3ODMsImp0aSI6ImJhYjY1NjMwZWYxOTQxMmE5MTliNDdmNzA2ODljZGNmIiwidXNlcl9pZCI6M30.3jsZ-LZuIxbFoPM0Alcilh0q-t8s2b7xO1pETre1LNI
+
+{
+    "classid":1,
+    "markscored":25
+}
