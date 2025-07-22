@@ -26,7 +26,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 GET http://127.0.0.1:8000/horizon001/api/students/gettestbyid/1/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMDg5MDgzLCJpYXQiOjE3NTMwODg3ODMsImp0aSI6ImJhYjY1NjMwZWYxOTQxMmE5MTliNDdmNzA2ODljZGNmIiwidXNlcl9pZCI6M30.3jsZ-LZuIxbFoPM0Alcilh0q-t8s2b7xO1pETre1LNI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMTk1NzkxLCJpYXQiOjE3NTMxOTU0OTEsImp0aSI6IjIzMDQ5NTBhNWRjYTRmN2I5ZDlkYTg2OGRmYjZmZDUyIiwidXNlcl9pZCI6M30.8gYVfQSBhNfp4kuYafXqsKziFkk7Nrhdjeyp448TQPY
 
 ### =========== 5. ADD MARK TO RESULTS =============
 
