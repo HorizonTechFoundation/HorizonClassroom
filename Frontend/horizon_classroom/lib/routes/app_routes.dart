@@ -45,9 +45,9 @@ class AppRoutes {
 
       
       case test:
-        return MaterialPageRoute(builder: (_) => const TestScreen());
+        return MaterialPageRoute(builder: (_) => const TestScreen(), settings: settings);
       case result:
-        return MaterialPageRoute(builder: (_) => const ResultScreen());      
+        return MaterialPageRoute(builder: (_) => const ResultScreen(), settings: settings);      
       case notes:
         return MaterialPageRoute(builder: (_) => const NotesScreen());
          

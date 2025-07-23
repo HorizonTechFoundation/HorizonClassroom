@@ -63,7 +63,31 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   // ------------------------------------------------------
-  // ================== GET CURRENT CLASS =================
+  // ================== GET CLASSROOM =====================
+
+  bool _didInit = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didInit) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      print("Received arguments: $args");
+
+      if (args is Map<String, dynamic>) {
+        classid = args['id'].toString();
+        className = args['classname'] ?? "Unknown Class";
+        getTestForClass();
+      } else {
+        print("Arguments missing or wrong type!");
+      }
+
+      _didInit = true;
+    }
+  }
+
+
+  // ------------------------------------------------------
+  // ================== GET TEST FOR CLASS =================
 
   final dio = Dio();
 
@@ -136,21 +160,25 @@ class _TestScreenState extends State<TestScreen> {
     
     if (isLoading) {
       return Scaffold(
-        appBar: AppBar(),
+        backgroundColor: Colors.white,
+        appBar: AppBar( backgroundColor: Colors.white,),
         body: Center(child: CircularProgressIndicator()),
       );
     } else if (isError) {
       return Scaffold(
-        appBar: AppBar(),
+        backgroundColor: Colors.white,
+        appBar: AppBar( backgroundColor: Colors.white,),
         body: Center(child: Text("Failed to load questions")),
       );
     }
     else if (questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(),
+        backgroundColor: Colors.white,
+        appBar: AppBar( backgroundColor: Colors.white,),
         body: Center(child: Text("No Questions Available !")),
       );
     }
+    
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -304,7 +332,7 @@ class _TestScreenState extends State<TestScreen> {
                             isAnswered = false;
                           });
                         } else {
-                          Navigator.pushNamed(context, '/result', arguments: score);
+                          Navigator.pushNamed(context, '/result', arguments: {"score":score, "total": questions.length, "className":className, "classid":classid});
                         }
                       }
                     },

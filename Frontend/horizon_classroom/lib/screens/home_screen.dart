@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       try {
         final response = await dio.get('$api/horizon001/api/students/currentclass/');
-        print(response.data);
+        // print(response.data);
         setState(() {
           currentClass = Map<String, dynamic>.from(response.data);
           isLoading = false;
@@ -227,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: GoogleFonts.basic(fontSize: width * 0.048, color: Colors.black),
                         ),
                         Text(
-                          '${currentClass['timeFrom'] ?? "Error"} - ${currentClass['timeEnd'] ?? "Error"} at ${currentClass['venue'] ?? "Error"}',
+                          '${currentClass['timeStart'] ?? "Error"} - ${currentClass['timeEnd'] ?? "Error"} at ${currentClass['venue'] ?? "Error"}',
                           style: GoogleFonts.basic(fontSize: width * 0.043, color: Colors.black54),
                         ),
                       ],
@@ -272,9 +272,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: currentClass.isNotEmpty ? () {
                             Navigator.pushNamed(context, '/classroom');
-                          },
+                          } : null,
                           child: Text("Join Class", 
                             style: GoogleFonts.amaranth(fontSize: width * 0.05, color: Colors.white),
                           ),

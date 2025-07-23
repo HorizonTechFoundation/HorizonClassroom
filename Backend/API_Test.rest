@@ -20,7 +20,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiY
 
 GET http://127.0.0.1:8000/horizon001/api/students/currentclass/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMDg4NTk1LCJpYXQiOjE3NTMwODgyOTUsImp0aSI6IjcxMjIzZjM3MDJhZTRjMWNiNDBkZmJmYTI4NTMyMTg2IiwidXNlcl9pZCI6M30.-XwjnTWJa-cfCZnQimmNagKYPIGJT-lCnlo3MuVCiGE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUzMjg3MTgwLCJpYXQiOjE3NTMyODY4ODAsImp0aSI6Ijg5YTM0NmRmMDYyNDQ5OTQ5Mjc5NmU1ODAxM2ZkYzM1IiwidXNlcl9pZCI6M30.hAoqxO47Ttu3wJzSSU6Cg9ZIHfS0tzpfflJQ149ibss
 
 ### =========== 4. GET TEST FOR CLASSROOM =============
 

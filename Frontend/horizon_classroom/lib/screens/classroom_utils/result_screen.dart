@@ -14,8 +14,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
   String className = "Data Structures and Algorithms";
 
-  int score = 0;
-  int totalScore = 2;
+  String score = "0";
+  String classid = "0";
+  String totalScore = "0";
 
   Map<String, String> results =
     {
@@ -40,6 +41,31 @@ class _ResultScreenState extends State<ResultScreen> {
       Navigator.pushNamed(context, '/welcome');
     }
   }
+
+  // ------------------------------------------------------
+  // ================== GET CLASSROOM =====================
+
+  bool _didInit = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didInit) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      print("Received arguments: $args");
+
+      if (args is Map<String, dynamic>) {
+        score = args['score'].toString();
+        totalScore = args['total'].toString();
+        classid = args['classid'].toString();
+        className = args['className'] ?? "Unknown Class";
+      } else {
+        print("Arguments missing or wrong type!");
+      }
+
+      _didInit = true;
+    }
+  }
+
 
   // ------------------------------------------------------
   // ================= INITIALIZATION =====================
