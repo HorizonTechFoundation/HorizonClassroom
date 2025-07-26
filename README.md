@@ -1,3 +1,96 @@
-# Horizon Classroom
-<p>🚀 This is the first project of Horizon Tech Foundation for empower the focus of the students by controlling the usage of the mobile phone during class hours.</p>
-<p>Developer : Kishor T</p>
+# HORIZON CLASSROOM
+
+**An innovative classroom engagement app by Horizon Tech Foundation**  
+**Built with Flutter (Frontend) + Django (Backend)**
+
+---
+
+## 🎯 Purpose
+
+**Horizon Classroom** is a mobile-first solution designed to minimize distractions during class or test hours. By enforcing in-app presence, the app automatically tracks student attention. If a student closes or minimizes the app, they are instantly **marked as absent**—encouraging full participation and minimizing mobile misuse.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Flutter + Dart  
+- **Backend:** Django REST Framework  
+- **Database:** SQLite/PostgreSQL  
+- **Authentication:** Token-based Auth  
+- **Deployment:** Firebase (for app) / Heroku or Render (for backend)  
+- **Monetization:** Google AdMob (In-App Ads)
+
+---
+
+## 🔑 Key Features
+
+- **App Lock & Attendance**  
+  Automatically marks students **absent** if they close or minimize the app during class.
+
+- **Real-time Session Tracking**  
+  Faculty can monitor ongoing sessions and see live attendance data.
+
+- **Role-based Access**  
+  Different views for **students** and **faculty**.
+
+- **Secure APIs**  
+  Django backend ensures safe communication and data validation.
+
+- **Ad Revenue Model**  
+  Displays in-app ads during sessions for monetization.
+
+---
+
+## 📸 Screenshots
+
+| Home Screen | Faculty Session | Student Lock View |
+|-------------|------------------|-------------------|
+| *Coming Soon* | *Coming Soon*   | *Coming Soon*     |
+
+---
+
+## 🚀 Getting Started
+
+### 📦 Prerequisites
+
+- Flutter SDK
+- Python 3.x
+- Django
+- Node.js (for optional admin dashboard)
+- Postman (for API testing)
+
+### 🧪 Local Setup
+
+#### Flutter App
+
+```bash
+git clone https://github.com/HorizonTechFoundation/HorizonClassroom.git
+cd HorizonClassroom/Frontend/horizon_classroom
+flutter pub get
+flutter run
+```
+#### Django Backend
+```bash
+cd HorizonClassroom/Backend/horizon_classroom_backend
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+## Future Improvements
+
+- Face Detection or Facial Presence Check
+- Geo-fencing for Campus Validation
+- AI/ML-based Student Behavior Analysis
+- Analytics Dashboard for Admin
+
+## Author
+**Kishor T**</br>
+Horizon Tech Foundation</br>
+kishor404@outlook.in
+
+## Support
+If you find this project useful, give it a ⭐️ and share it with your peers! </br>
+Pull requests and suggestions are welcome.
