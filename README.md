@@ -1,4 +1,12 @@
+<p align="center">
+  <img src="https://github.com/HorizonTechFoundation/HorizonClassroom/blob/main/Utils/horizonclassroombanner.png" alt="Horizon Classroom Banner" width="80%">
+</p>
+
 # HORIZON CLASSROOM
+
+[![Flutter](https://img.shields.io/badge/Built%20With-Flutter-blue?logo=flutter)](https://flutter.dev)
+[![Django](https://img.shields.io/badge/Backend-Django-darkgreen?logo=django)](https://www.djangoproject.com/)
+
 
 **An innovative classroom engagement app by Horizon Tech Foundation**  
 **Built with Flutter (Frontend) + Django (Backend)**
@@ -8,6 +16,19 @@
 ## 🎯 Purpose
 
 **Horizon Classroom** is a mobile-first solution designed to minimize distractions during class or test hours. By enforcing in-app presence, the app automatically tracks student attention. If a student closes or minimizes the app, they are instantly **marked as absent**—encouraging full participation and minimizing mobile misuse.
+
+### Project Info
+
+| Name              | Horizon Classroom                          |
+|-------------------|---------------------------------------------|
+| Company           | Horizon Tech Foundation                    |
+| Developed By      | Kishor T                                   |
+| Frontend          | Flutter + Dart                             |
+| Backend           | Django (REST Framework)                    |
+| Monetization      | Google AdMob (In-App Ads)                  |
+| Platforms         | Android, iOS                               |
+| Use Case          | Prevent phone usage during class/test time |
+
 
 ---
 
