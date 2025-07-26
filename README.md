@@ -1,4 +1,4 @@
-<p align="start">
+<p align="center">
   <img src="https://github.com/HorizonTechFoundation/HorizonClassroom/blob/main/Utils/horizonclassroombanner.png" alt="Horizon Classroom Banner" width="80%">
 </p>
 
